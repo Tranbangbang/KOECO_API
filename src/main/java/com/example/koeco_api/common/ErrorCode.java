@@ -11,6 +11,15 @@ public enum ErrorCode {
     ID_DUPLICATION(400, "MEMBER-ERR-400", "ID_DUPLICATION."),
 
     ID_NOT_FOUND(400, "MEMBER-ERR-400", "ID_NOT_FOUND."),
+
+
+    //-----user exception
+    USER_NOT_FOUND(400, "USER_NOT_FOUND", "User not found"),
+    EMAIL_WAS_REGISTER(400, "EMAIL_WAS_REGISTER", "Email was register"),
+
+
+    //----user localization exception
+    USER_LOCALIZATION_NOT_FOUND(400, "USER_LOCALIZATION_NOT_FOUND", "User localization not found")
     ;
 
     private int status;
