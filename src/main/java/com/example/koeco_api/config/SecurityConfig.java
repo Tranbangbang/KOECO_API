@@ -32,6 +32,7 @@ public class SecurityConfig {
             "/health",
             "/sso/**",
             "/api/v1/demo",
+            "/api/v1/member-company/**",
     };
     private final JwtAuthenticaionFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;

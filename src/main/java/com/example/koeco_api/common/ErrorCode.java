@@ -11,6 +11,7 @@ public enum ErrorCode {
     ID_DUPLICATION(400, "MEMBER-ERR-400", "ID_DUPLICATION."),
 
     ID_NOT_FOUND(400, "MEMBER-ERR-400", "ID_NOT_FOUND."),
+    ID_NOT_FOUNDaaaa(1000, "MEMBER-ERR-400", "ID_NOT_FOUND."),
     ;
 
     private int status;
