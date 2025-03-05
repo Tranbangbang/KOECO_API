@@ -46,6 +46,9 @@ spring:
             enable: true
 server:
   port: 8085
+  servlet:
+    session:
+      timeout: 100m
 #For https
 #  ssl:
 #    key-store: keystore.p12
@@ -59,6 +62,7 @@ jwt:
   expiration: 28800000
   refresh-token:
     expiration: 86400000
+
 
 
 
