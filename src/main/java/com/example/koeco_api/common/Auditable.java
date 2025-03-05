@@ -26,7 +26,7 @@ public abstract  class Auditable {
     private String modifier_By;
 
     @Column(name = "is_delete")
-    private Boolean is_Delete;
+    private Boolean isDelete =false;
     @PrePersist
     protected void onCreate() {
         this.create_Date = LocalDateTime.now();
