@@ -28,6 +28,8 @@ public class Banner extends Auditable {
     @Column(name = "link", length = 255)
     private String link; // 링크 (Liên kết)
 
+    private int pos; // thứ tự hiển thị
+
     @Column(name = "display_start_date")
     private LocalDate displayStartDate; // 노출기간 시작 (Ngày bắt đầu hiển thị)
 

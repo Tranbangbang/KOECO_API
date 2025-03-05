@@ -33,6 +33,7 @@ public class SecurityConfig {
             "/sso/**",
             "/api/v1/demo",
             "/api/v1/member-company/**",
+            "/api/v1/**",
     };
     private final JwtAuthenticaionFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
