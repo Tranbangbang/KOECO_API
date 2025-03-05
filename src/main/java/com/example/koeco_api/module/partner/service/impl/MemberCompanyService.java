@@ -118,6 +118,20 @@ public class MemberCompanyService implements IMemberCompanyService {
         }
     }
 
+    @Override
+    public Page<MemberCompanyResponse> searchMemberCompanies(String companyName, PageRequest pageRequest) {
+        try {
+            Page<MemberCompany> result = _repository.findByCompanyNameContainingIgnoreCaseAndIsDeleteFalse(companyName, pageRequest);
+            if (result == null || result.getSize() == 0) {
+                throw new CommonException(ErrorCode.NOT_FOUND);
+            }
+
+            return result.map(_mapper::toResponse);
+        } catch (Exception ex) {
+            throw new CommonException(ErrorCode.INTER_SERVER_ERROR);
+        }
+    }
+
 
 
     private String saveLogo(MultipartFile file) {

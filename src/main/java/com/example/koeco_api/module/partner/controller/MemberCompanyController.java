@@ -53,11 +53,18 @@ public class MemberCompanyController {
         return ResponseEntity.ok(DefaultRes.res(StatusCode.OK, "Cập nhật công ty thành viên thành công", response));
     }
 
-
-    // Xóa công ty theo ID
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<DefaultRes<Void>> delete(@PathVariable Long id) {
         _memberCompanyService.deleteMemberCompany(id);
         return ResponseEntity.ok(DefaultRes.res(StatusCode.OK, "Xóa công ty thành viên thành công"));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<DefaultRes<Page<MemberCompanyResponse>>> searchMemberCompanies(
+            @RequestParam String companyName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<MemberCompanyResponse> response = _memberCompanyService.searchMemberCompanies(companyName, PageRequest.of(page, size));
+        return ResponseEntity.ok(DefaultRes.res(StatusCode.OK, "Danh sách công ty thành viên tìm kiếm được", response));
     }
 }
