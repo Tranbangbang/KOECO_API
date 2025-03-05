@@ -5,6 +5,7 @@ import com.example.koeco_api.module.exhibition.entity.Exhibition;
 import com.example.koeco_api.module.contact.entity.ExhibitionInquiry;
 import com.example.koeco_api.module.contact.entity.ExhibitionInquiryResponse;
 import com.example.koeco_api.module.user.common.Role;
+import com.example.koeco_api.module.user_localizations.entity.UserLocalizationEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -40,6 +42,7 @@ public class User implements UserDetails {
     private String email;
 
 
+    //--------mapped entity
     @ManyToMany(mappedBy = "users")
     private Set<Exhibition> exhibitions;
     @NotNull
@@ -47,6 +50,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    List<UserLocalizationEntity> userLocalization;
+    //----overide method
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
