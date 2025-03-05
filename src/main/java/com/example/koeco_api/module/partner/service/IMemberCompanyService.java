@@ -11,4 +11,5 @@ public interface IMemberCompanyService {
     MemberCompanyResponse getMemberCompanyDetail(Long id);
     MemberCompanyResponse updateMemberCompany(Long id, MemberCompanyRequest request);
     void deleteMemberCompany(Long id);
+    Page<MemberCompanyResponse> searchMemberCompanies(String companyName, PageRequest pageRequest);
 }

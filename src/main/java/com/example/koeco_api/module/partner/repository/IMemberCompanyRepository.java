@@ -12,4 +12,7 @@ public interface IMemberCompanyRepository extends JpaRepository<MemberCompany, L
     @Query("SELECT m FROM MemberCompany m WHERE m.isDelete = false")
     Page<MemberCompany> findByIsDeleteFalse(PageRequest pageRequest);
 
+
+    Page<MemberCompany> findByCompanyNameContainingIgnoreCaseAndIsDeleteFalse(String companyName, PageRequest pageRequest);
+
 }
