@@ -1,4 +1,4 @@
-package com.example.koeco_api.module.exhibition.entity;
+package com.example.koeco_api.module.contact.entity;
 
 import com.example.koeco_api.common.Auditable;
 import com.example.koeco_api.module.user.entity.User;

@@ -36,4 +36,7 @@ public class MemberCompany extends Auditable {
 
     @Column(name = "logo_url")
     private String logoUrl;
+
+    @Column(name = "view_count")
+    private int viewCount = 0;
 }

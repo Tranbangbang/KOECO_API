@@ -19,7 +19,8 @@ public enum ErrorCode {
 
 
     //----user localization exception
-    USER_LOCALIZATION_NOT_FOUND(400, "USER_LOCALIZATION_NOT_FOUND", "User localization not found")
+    USER_LOCALIZATION_NOT_FOUND(400, "USER_LOCALIZATION_NOT_FOUND", "User localization not found"),
+    ID_NOT_FOUNDaaaa(1000, "MEMBER-ERR-400", "ID_NOT_FOUND.")
     ;
 
     private int status;

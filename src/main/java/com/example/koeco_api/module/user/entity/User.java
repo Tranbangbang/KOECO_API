@@ -2,8 +2,8 @@ package com.example.koeco_api.module.user.entity;
 
 
 import com.example.koeco_api.module.exhibition.entity.Exhibition;
-import com.example.koeco_api.module.exhibition.entity.ExhibitionInquiry;
-import com.example.koeco_api.module.exhibition.entity.ExhibitionInquiryResponse;
+import com.example.koeco_api.module.contact.entity.ExhibitionInquiry;
+import com.example.koeco_api.module.contact.entity.ExhibitionInquiryResponse;
 import com.example.koeco_api.module.user.common.Role;
 import com.example.koeco_api.module.user_localizations.entity.UserLocalizationEntity;
 import jakarta.persistence.*;
@@ -43,11 +43,6 @@ public class User implements UserDetails {
 
 
     //--------mapped entity
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ExhibitionInquiry> exhibitionInquiries;
-
-    @OneToMany(mappedBy = "admin", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ExhibitionInquiryResponse> inquiryResponses;
     @ManyToMany(mappedBy = "users")
     private Set<Exhibition> exhibitions;
     @NotNull
