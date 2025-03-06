@@ -20,9 +20,9 @@ public interface UserRepository extends JpaRepository<User, String> {
             select distinct us from User us
             join us.userLocalization usLocal  
             where 
-            (:username is null or us.userId = :username)
-            and (:company is null or  usLocal.companyName = :company)
-            and (:director is null or usLocal.director = :director)
+            (:username is null or us.userId like concat ('%', :username ,'%') )
+            and (:company is null or  usLocal.companyName like concat('%',:company,'%') )
+            and (:director is null or usLocal.director like concat('%',:director,'%') )
             """)
     Page<User> findUser(Pageable pageable,
                         @Param("username") String username,
