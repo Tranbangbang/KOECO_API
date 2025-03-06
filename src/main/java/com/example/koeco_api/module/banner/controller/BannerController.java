@@ -14,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "05.Banner")
+@Tag(name = "06.Banner")
 @RestController
 @RequestMapping("/api/v1/banner")
 @RequiredArgsConstructor

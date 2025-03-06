@@ -31,6 +31,7 @@ public class ExhibitionRegisterRequest {
     private String productNameKr;
     private String productNameEn;
 
+    private String applicationScale;
     private String boothSize;
 
     private MultipartFile businessRegistrationFile;
