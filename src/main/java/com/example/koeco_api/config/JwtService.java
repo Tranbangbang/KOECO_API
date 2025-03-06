@@ -1,12 +1,15 @@
 package com.example.koeco_api.config;
 
+import com.example.koeco_api.module.blacklist_token.service.BlacklistService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -26,6 +30,16 @@ public class JwtService {
     private long jwtExpiration;
     @Value("${jwt.refresh-token.expiration}")
     private long refreshExpiration;
+
+    @Autowired
+    private BlacklistService blacklistService;
+
+    public String getToken(HttpServletRequest request){
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer "))
+            return null;
+        return authHeader.substring(7);
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -58,6 +72,8 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+        String tokenId = UUID.randomUUID().toString();
+        extraClaims.put("jti", tokenId);
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -70,7 +86,14 @@ public class JwtService {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        String tokenId = null;
+        try {
+            tokenId = extractClaim(token, Claims::getId);
+        } catch (Exception e) {
+            log.error("cannot get jwt id: ", e.getMessage());
+        }
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token)
+                && !blacklistService.findByJwtId(tokenId);
     }
 
     private boolean isTokenExpired(String token) {

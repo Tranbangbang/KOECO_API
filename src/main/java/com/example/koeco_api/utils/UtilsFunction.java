@@ -7,6 +7,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +28,8 @@ public class UtilsFunction {
 
         return matcher.matches(); // Trả về true nếu email hợp lệ, false nếu không hợp lệ
     }
-    public static LocalDateTime getVietNameTimeNow(){
+
+    public static LocalDateTime getVietNameTimeNow() {
         ZoneId vietnamZone = ZoneId.of("Asia/Ho_Chi_Minh");
         ZonedDateTime vietnamTime = ZonedDateTime.now(vietnamZone);
 
@@ -35,20 +37,20 @@ public class UtilsFunction {
         return vietnamTime.toLocalDateTime();
     }
 
-    public  static String convertParamToString(String param){
-        if(param == null)
+    public static String convertParamToString(String param) {
+        if (param == null)
             return null;
         param = param.trim();
-        if(param.isEmpty())
+        if (param.isEmpty())
             return null;
         return param;
     }
 
-    public static Double convertParamToDouble(String param){
-        if(param == null)
+    public static Double convertParamToDouble(String param) {
+        if (param == null)
             return null;
         param = param.trim();
-        if(param.isEmpty())
+        if (param.isEmpty())
             return null;
 
         return Double.parseDouble(param);
@@ -74,7 +76,7 @@ public class UtilsFunction {
         return true;
     }
 
-    public static String saveLogo(MultipartFile file,String UPLOAD_DIR) {
+    public static String saveLogo(MultipartFile file, String UPLOAD_DIR) {
         try {
             Path uploadPath = Paths.get(UPLOAD_DIR);
             if (!Files.exists(uploadPath)) {
@@ -94,4 +96,5 @@ public class UtilsFunction {
             throw new CommonException(ErrorCode.INTER_SERVER_ERROR);
         }
     }
+
 }

@@ -1,23 +1,19 @@
 package com.example.koeco_api.module.user.dto.request;
 
 import com.example.koeco_api.utils.UtilsValidate;
-import jakarta.persistence.NamedStoredProcedureQueries;
 import lombok.*;
-
-import java.util.Arrays;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
-public class UserSearch {
-    private String userName;
-    private String companyName;
-    private String director;
+public class LoginRequest {
+    private String username;
+    private String password;
 
     public void simpleValidate(){
         UtilsValidate.validateFields(this);
     }
+
 }

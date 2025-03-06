@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,10 +27,10 @@ public class Exhibition extends Auditable {
     @Column(name = "name_kr", nullable = false, length = 255)
     private String nameKr;
 
-    @Column(name = "name_en", length = 255)
+    @Column(name = "name_en", nullable = false, length = 255)
     private String nameEn;
 
-    @Column(name = "name_cn", length = 255)
+    @Column(name = "name_cn", nullable = false, length = 255)
     private String nameCn;
 
     @Column(name = "is_highlighted")
@@ -64,8 +65,11 @@ public class Exhibition extends Auditable {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description; // 행사내용 (Mô tả sự kiện)
 
-    @Column(name = "image_path")
-    private String imagePath; // 이미지등록 (Ảnh triển lãm)
+    @Column(name = "image_regis")
+    private String imageRegis; // 이미지등록 (Ảnh triển lãm)
+
+    @Column(name = "image_large")
+    private String imageLarge;
 
     @Column(name = "pdf_path")
     private String pdfPath; // 파일등록 (Tệp đính kèm)
@@ -73,6 +77,9 @@ public class Exhibition extends Auditable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ApplicationStatus status; // Trạng thái đăng ký
+
+    @OneToMany(mappedBy = "exhibition")
+    private List<ExhibitionDocument> exhibitionDocuments;
 
     @ManyToMany
     @JoinTable(
