@@ -16,10 +16,10 @@ public class ExhibitionDocument extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "document_path", nullable = false, length = 255)
+    private String documentPath;
+
     @ManyToOne
     @JoinColumn(name = "exhibition_id")
     private Exhibition exhibition;
-
-    @Column(name = "document_path", nullable = false, length = 255)
-    private String documentPath;
 }
