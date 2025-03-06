@@ -3,12 +3,18 @@ package com.example.koeco_api.module.exhibition.service.impl;
 import com.example.koeco_api.common.CommonException;
 import com.example.koeco_api.common.ErrorCode;
 import com.example.koeco_api.module.exhibition.dto.request.ExhibitionRegisterRequest;
+import com.example.koeco_api.module.exhibition.dto.request.ExhibitionRegisterUpdateRequest;
 import com.example.koeco_api.module.exhibition.dto.response.ExhibitionRegisterResponse;
+import com.example.koeco_api.module.exhibition.entity.Exhibition;
 import com.example.koeco_api.module.exhibition.entity.ExhibitionRegister;
 import com.example.koeco_api.module.exhibition.mapper.ExhibitionRegisterMapper;
 import com.example.koeco_api.module.exhibition.repository.IExhibitionRegisterRepository;
+import com.example.koeco_api.module.exhibition.repository.IExhibitionRepository;
 import com.example.koeco_api.module.exhibition.service.IExhibitionRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -22,6 +28,8 @@ import java.nio.file.Paths;
 public class ExhibitionRegisterService implements IExhibitionRegisterService {
     @Autowired
     private IExhibitionRegisterRepository exhibitionRegisterRepository;
+    @Autowired
+    private IExhibitionRepository exhibitionRepository;
 
     @Autowired
     private ExhibitionRegisterMapper exhibitionRegisterMapper;
@@ -30,21 +38,25 @@ public class ExhibitionRegisterService implements IExhibitionRegisterService {
 
     @Override
     public ExhibitionRegisterResponse createExhibitionRegister(ExhibitionRegisterRequest request) {
-        try{
+        try {
             String businessFilePath = saveFile(request.getBusinessRegistrationFile());
             String corporateFilePath = saveFile(request.getCorporateRegistrationFile());
-            ExhibitionRegister exhibitionRegister = exhibitionRegisterMapper.toEntity(request);
+
+            Exhibition exhibition = exhibitionRepository.findById(request.getExhibitionId())
+                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND));
+            ExhibitionRegister exhibitionRegister = exhibitionRegisterMapper.toEntity(request, exhibition);
             exhibitionRegister.setBusinessRegistrationFilePath(businessFilePath);
             exhibitionRegister.setCorporateRegistrationFilePath(corporateFilePath);
+
             ExhibitionRegister savedExhibitionRegister = exhibitionRegisterRepository.save(exhibitionRegister);
             return exhibitionRegisterMapper.toResponse(savedExhibitionRegister);
-        }catch (CommonException ex) {
+        } catch (CommonException ex) {
             throw ex;
         } catch (Exception ex) {
             throw new CommonException(ErrorCode.INTER_SERVER_ERROR);
         }
-
     }
+
 
     private String saveFile(MultipartFile file) {
         try {
@@ -79,5 +91,34 @@ public class ExhibitionRegisterService implements IExhibitionRegisterService {
             throw new CommonException(ErrorCode.INTER_SERVER_ERROR);
         }
 
+    }
+
+    @Override
+    public Page<ExhibitionRegisterResponse> getAllExhibitionRegisters(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ExhibitionRegister> registers = exhibitionRegisterRepository.findAll(pageable);
+        return registers.map(register -> ExhibitionRegisterResponse.builder()
+                .id(register.getId())
+                .companyNameKr(register.getCompanyNameKr())
+                .productNameKr(register.getProductNameKr())
+                .exhibitionName(register.getExhibition().getNameKr())
+                .createDate(register.getCreate_Date())
+                .build());
+    }
+
+    @Override
+    public ExhibitionRegisterResponse updateExhibitionRegister(Long id, ExhibitionRegisterUpdateRequest updateRequest) {
+        try {
+            ExhibitionRegister exhibitionRegister = exhibitionRegisterRepository.findById(id)
+                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND));
+            exhibitionRegister.setApplicationScale(updateRequest.getApplicationScale());
+            exhibitionRegister.setBoothSize(updateRequest.getBoothSize());
+            ExhibitionRegister updatedRegister = exhibitionRegisterRepository.save(exhibitionRegister);
+            return exhibitionRegisterMapper.toResponse(updatedRegister);
+        } catch (CommonException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new CommonException(ErrorCode.INTER_SERVER_ERROR);
+        }
     }
 }

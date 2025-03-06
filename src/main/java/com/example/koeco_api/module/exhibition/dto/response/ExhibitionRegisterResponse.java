@@ -2,6 +2,8 @@ package com.example.koeco_api.module.exhibition.dto.response;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,4 +27,7 @@ public class ExhibitionRegisterResponse {
     private String boothSize;
     private String businessRegistrationFilePath;
     private String corporateRegistrationFilePath;
+    private LocalDateTime createDate;
+    private String exhibitionName;
+    private String applicationScale;
 }

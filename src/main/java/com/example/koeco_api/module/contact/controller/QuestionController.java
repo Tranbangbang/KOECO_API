@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "06.Question")
+@Tag(name = "07.Question")
 @RestController
 @RequestMapping("/api/v1/question")
 @RequiredArgsConstructor

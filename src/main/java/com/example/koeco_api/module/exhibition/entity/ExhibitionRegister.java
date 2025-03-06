@@ -59,6 +59,9 @@ public class ExhibitionRegister extends Auditable {
     @Column(name = "product_name_en", length = 255)
     private String productNameEn;
 
+    @Column(name = "application_scale", length = 255)
+    private String applicationScale;
+
     @Column(name = "booth_size", length = 255)
     private String boothSize;
 
@@ -66,6 +69,6 @@ public class ExhibitionRegister extends Auditable {
     private String businessRegistrationFilePath;
 
     @Column(name = "corporate_registration_file_path", length = 255)
-    private String corporateRegistrationFilePath; // Đường dẫn tệp đăng ký công ty
+    private String corporateRegistrationFilePath;
 
 }

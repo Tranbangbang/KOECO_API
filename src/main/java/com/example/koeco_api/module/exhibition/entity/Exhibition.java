@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -95,5 +96,9 @@ public class Exhibition extends Auditable {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> users;
+
+
+    @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ExhibitionRegister> exhibitionRegisters = new HashSet<>();
 
 }
