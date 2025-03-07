@@ -38,7 +38,14 @@ public enum ErrorCode {
 
     //----category exception
     CATEGORY_EXITS(400, "CATEGORY_EXITS", "Category exits"),
-    CATEGORY_NOT_FOUND(400, "CATEGORY_NOT_FOUND", "Category not found")
+    CATEGORY_NOT_FOUND(400, "CATEGORY_NOT_FOUND", "Category not found"),
+
+    //----file exception
+    IMAGE_NOT_VALID(400, "IMAGE_NOT_VALID", "Image not valid"),
+    VIDEO_NOT_VALID(400, "VIDEO_NOT_VALID", "Video not valid"),
+    FILE_TOO_LARGE(400, "FILE_TOO_LARGE", "File too large"),
+    FILE_IS_NULL(400, "FILE_IS_NULL", "File is null"),
+    CAN_NOT_CREATE_FOLDER(400, "CAN_NOT_CREATE_FOLDER", "Can not create folder"),
     ;
 
     private int status;
