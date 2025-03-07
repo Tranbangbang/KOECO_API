@@ -1,13 +1,9 @@
 spring:
-  logging:
-    level:
-      org.hibernate.SQL: off
-      org.hibernate.type.descriptor.sql.BasicBinder: off
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/db_koeco?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8
     username: root
-    password: bang0501@
+    password: 1234
   #  thymeleaf:
   #    cache: false
   #    prefix: classpath:/templates/
@@ -67,6 +63,9 @@ jwt:
   refresh-token:
     expiration: 86400000
 
-
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework: INFO
 
 
